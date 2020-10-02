@@ -15,10 +15,18 @@ let postWebhook = (req, res) =>{
         // Iterates over each entry - there may be multiple if batched
         body.entry.forEach(function(entry) {
 
-            // Gets the message. entry.messaging is an array, but
-            // will only ever contain one message, so we get index 0
+            // Gets the body of the webhook event
             let webhook_event = entry.messaging[0];
             console.log(webhook_event);
+
+            // Get the sender PSID
+            let sender_psid = webhook_event.sender.id;
+            console.log('Sender PSID: ' + sender_psid);
+
+            /*// Gets the message. entry.messaging is an array, but
+            // will only ever contain one message, so we get index 0
+            let webhook_event = entry.messaging[0];
+            console.log(webhook_event);*/
         });
 
         // Returns a '200 OK' response to all requests
@@ -54,6 +62,21 @@ let getWebhook = (req, res) => {
         }
     }
 };
+
+// Handles messages events
+let handleMessage = (sender_psid, received_message) => {
+
+}
+
+// Handles messaging_postbacks events
+let handlePostback = (sender_psid, received_postback) => {
+
+}
+
+// Sends response messages via the Send API
+let callSendAPI = (sender_psid, response) => {
+
+}
 
 module.exports = {
     getHomepage: getHomepage,

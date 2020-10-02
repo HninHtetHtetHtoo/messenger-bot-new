@@ -116,7 +116,7 @@ let handleMessage = (sender_psid, received_message) => {
 };
 
 // Handles messaging_postbacks events
-let handlePostback = (sender_psid, received_postback) => {
+let handlePostback = async (sender_psid, received_postback) => {
     let response;
 
     // Get the payload for the postback
@@ -132,7 +132,8 @@ let handlePostback = (sender_psid, received_postback) => {
             break;
 
         case "GET_STARTED":
-            response = { "text" : "Hi there! Welcome to MyBuy store. I'm a MyBuy bot. How can I help you?"}
+            let userName = await homepageService.getFacebookUserName(sender_psid);
+            response = { "text" : `Hi ${userName}! Welcome to MyBuy store. I'm a MyBuy bot. How can I help you?`}
             break;
 
         default:

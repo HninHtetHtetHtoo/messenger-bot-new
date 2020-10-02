@@ -55,7 +55,6 @@ let handleSetupProfileAPI = () => {
                 "json": request_body
             }, (err, res, body) => {
                 if (!err) {
-                    console.log(body)
                     resolve("OK!")
                 } else {
                     reject("Unable to send message:" + err);
@@ -68,6 +67,33 @@ let handleSetupProfileAPI = () => {
     });
 };
 
+let getFacebookUserName = (sender_psid) => {
+    return new Promise((resolve, reject) => {
+
+        let url = `https://graph.facebook.com/${sender_psid}?fields=first_name,last_name,profile_pic&access_token=${PAGE_ACCESS_TOKEN}`;
+        try {
+            // Send the HTTP request to the Messenger Platform
+            request({
+                "uri": url,
+                "qs": { "access_token": PAGE_ACCESS_TOKEN },
+                "method": "GET",
+            }, (err, res, body) => {
+                if (!err) {
+                    //convert string to json object
+                    body = JSON.parse(body)
+                    let userName = ${body.first_name} ${body.last_name}
+                    resolve(userName)
+                } else {
+                    reject("Unable to send message:" + err);
+                }
+            });
+        }catch (e){
+            reject(e);
+        }
+    });
+};
+
 module.exports = {
-    handleSetupProfileAPI: handleSetupProfileAPI
+    handleSetupProfileAPI: handleSetupProfileAPI,
+    getFacebookUserName: getFacebookUserName
 }

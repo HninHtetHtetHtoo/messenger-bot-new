@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 import request from 'request';
 
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
@@ -53,6 +55,7 @@ let handleSetupProfileAPI = () => {
                 "json": request_body
             }, (err, res, body) => {
                 if (!err) {
+                    console.log(body)
                     resolve("OK!")
                 } else {
                     reject("Unable to send message:" + err);

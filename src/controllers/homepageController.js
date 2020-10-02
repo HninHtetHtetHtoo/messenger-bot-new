@@ -122,12 +122,23 @@ let handlePostback = (sender_psid, received_postback) => {
     // Get the payload for the postback
     let payload = received_postback.payload;
 
-    // Set the response based on the postback payload
-    if (payload === 'yes') {
-        response = { "text": "Thanks!" }
-    } else if (payload === 'no') {
-        response = { "text": "Oops, try sending another image." }
+    switch (payload){
+        case "yes":
+            response = { "text": "Thanks!" }
+            break;
+
+        case "no":
+            response = { "text": "Oops, try sending another image." }
+            break;
+
+        case "GET_STARTED":
+            response = { "text" : "Hi there! Welcome to MyBuy store. I'm a MyBuy bot. How can I help you?"}
+            break;
+
+        default:
+            console.log("run default switch case.")
     }
+
     // Send the message to acknowledge the postback
     callSendAPI(sender_psid, response);
 };
@@ -166,9 +177,14 @@ let handleSetupProfile = async (req, res) => {
     }
 };
 
+let getSetupProfilePage = (req, res) => {
+    return res.render("profile.ejs");
+};
+
 module.exports = {
     getHomepage: getHomepage,
     postWebhook: postWebhook,
     getWebhook: getWebhook,
-    handleSetupProfile: handleSetupProfile
+    handleSetupProfile: handleSetupProfile,
+    getSetupProfilePage: getSetupProfilePage
 };

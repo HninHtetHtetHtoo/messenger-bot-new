@@ -1,6 +1,8 @@
 require("dotenv").config();
+import request from 'request';
 
-const MY_VERIFY_FB_TOKEN= process.env.MY_VERIFY_FB_TOKEN;
+const MY_VERIFY_FB_TOKEN = process.env.MY_VERIFY_FB_TOKEN;
+const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 
 let getHomepage = (req, res) => {
     return res.render("homepage.ejs");
@@ -19,14 +21,18 @@ let postWebhook = (req, res) =>{
             let webhook_event = entry.messaging[0];
             console.log(webhook_event);
 
+
             // Get the sender PSID
             let sender_psid = webhook_event.sender.id;
             console.log('Sender PSID: ' + sender_psid);
 
-            /*// Gets the message. entry.messaging is an array, but
-            // will only ever contain one message, so we get index 0
-            let webhook_event = entry.messaging[0];
-            console.log(webhook_event);*/
+            // Check if the event is a message or postback and
+            // pass the event to the appropriate handler function
+            if (webhook_event.message) {
+                handleMessage(sender_psid, webhook_event.message);
+            } else if (webhook_event.postback) {
+                handlePostback(sender_psid, webhook_event.postback);
+            }
         });
 
         // Returns a '200 OK' response to all requests
@@ -65,17 +71,89 @@ let getWebhook = (req, res) => {
 
 // Handles messages events
 let handleMessage = (sender_psid, received_message) => {
+    let response;
 
+    // Check if the message contains text
+    if (received_message.text) {
+
+        // Create the payload for a basic text message
+        response = {
+            "text": `You sent the message: "${received_message.text}". Now send me an image!`
+        }
+    }else if (received_message.attachments) {
+        // Get the URL of the message attachment
+        let attachment_url = received_message.attachments[0].payload.url;
+        response = {
+            "attachment": {
+                "type": "template",
+                "payload": {
+                    "template_type": "generic",
+                    "elements": [{
+                        "title": "Is this the right picture?",
+                        "subtitle": "Tap a button to answer.",
+                        "image_url": attachment_url,
+                        "buttons": [
+                            {
+                                "type": "postback",
+                                "title": "Yes!",
+                                "payload": "yes",
+                            },
+                            {
+                                "type": "postback",
+                                "title": "No!",
+                                "payload": "no",
+                            }
+                        ],
+                    }]
+                }
+            }
+        }
+    }
+
+    // Sends the response message
+    callSendAPI(sender_psid, response);
 }
 
 // Handles messaging_postbacks events
 let handlePostback = (sender_psid, received_postback) => {
+    let response;
 
+    // Get the payload for the postback
+    let payload = received_postback.payload;
+
+    // Set the response based on the postback payload
+    if (payload === 'yes') {
+        response = { "text": "Thanks!" }
+    } else if (payload === 'no') {
+        response = { "text": "Oops, try sending another image." }
+    }
+    // Send the message to acknowledge the postback
+    callSendAPI(sender_psid, response);
 }
 
 // Sends response messages via the Send API
 let callSendAPI = (sender_psid, response) => {
+// Construct the message body
+    let request_body = {
+        "recipient": {
+            "id": sender_psid
+        },
+        "message": response
+    };
 
+    // Send the HTTP request to the Messenger Platform
+    request({
+        "uri": "https://graph.facebook.com/v6.0/me/messages",
+        "qs": { "access_token": PAGE_ACCESS_TOKEN },
+        "method": "POST",
+        "json": request_body
+    }, (err, res, body) => {
+        if (!err) {
+            console.log('message sent!')
+        } else {
+            console.error("Unable to send message:" + err);
+        }
+    });
 }
 
 module.exports = {

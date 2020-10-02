@@ -1,5 +1,6 @@
 require("dotenv").config();
 import request from 'request';
+import homepageService from '../services/homepageService';
 
 const MY_VERIFY_FB_TOKEN = process.env.MY_VERIFY_FB_TOKEN;
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
@@ -112,7 +113,7 @@ let handleMessage = (sender_psid, received_message) => {
 
     // Sends the response message
     callSendAPI(sender_psid, response);
-}
+};
 
 // Handles messaging_postbacks events
 let handlePostback = (sender_psid, received_postback) => {
@@ -129,7 +130,7 @@ let handlePostback = (sender_psid, received_postback) => {
     }
     // Send the message to acknowledge the postback
     callSendAPI(sender_psid, response);
-}
+};
 
 // Sends response messages via the Send API
 let callSendAPI = (sender_psid, response) => {
@@ -154,10 +155,20 @@ let callSendAPI = (sender_psid, response) => {
             console.error("Unable to send message:" + err);
         }
     });
-}
+};
+
+let handleSetupProfile = async (req, res) => {
+    try {
+        await homepageService.handleSetupProfileAPI();
+        return res.redirect("/");
+    }catch (e){
+        console.log(e);
+    }
+};
 
 module.exports = {
     getHomepage: getHomepage,
     postWebhook: postWebhook,
-    getWebhook: getWebhook
+    getWebhook: getWebhook,
+    handleSetupProfile: handleSetupProfile
 };

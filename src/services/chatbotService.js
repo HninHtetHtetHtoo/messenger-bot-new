@@ -96,7 +96,117 @@ let sendMessageWelcomeNewUser = (sender_psid) => {
   });
 };
 
+let sendCategories = (sender_psid) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            //send a generic template message
+            let response = {
+                "attachment":{
+                    "type":"template",
+                    "payload":{
+                        "template_type":"generic",
+                        "elements":[
+                            {
+                                "title":"Welcome!",
+                                "image_url":"https://petersfancybrownhats.com/company_image.png",
+                                "subtitle":"We have the right hat for everyone.",
+                                "default_action": {
+                                    "type": "web_url",
+                                    "url": "https://petersfancybrownhats.com/view?item=103",
+                                    "webview_height_ratio": "tall",
+                                },
+                                "buttons":[
+                                    {
+                                        "type":"web_url",
+                                        "url":"https://petersfancybrownhats.com",
+                                        "title":"View Website"
+                                    },{
+                                        "type":"postback",
+                                        "title":"Start Chatting",
+                                        "payload":"DEVELOPER_DEFINED_PAYLOAD"
+                                    }
+                                ]
+                            },
+                            {
+                                "title":"Welcome 1!",
+                                "image_url":"https://petersfancybrownhats.com/company_image.png",
+                                "subtitle":"We have the right hat for everyone.",
+                                "default_action": {
+                                    "type": "web_url",
+                                    "url": "https://petersfancybrownhats.com/view?item=103",
+                                    "webview_height_ratio": "tall",
+                                },
+                                "buttons":[
+                                    {
+                                        "type":"web_url",
+                                        "url":"https://petersfancybrownhats.com",
+                                        "title":"View Website"
+                                    },{
+                                        "type":"postback",
+                                        "title":"Start Chatting",
+                                        "payload":"DEVELOPER_DEFINED_PAYLOAD"
+                                    }
+                                ]
+                            },
+                            {
+                                "title":"Welcome 2!",
+                                "image_url":"https://petersfancybrownhats.com/company_image.png",
+                                "subtitle":"We have the right hat for everyone.",
+                                "default_action": {
+                                    "type": "web_url",
+                                    "url": "https://petersfancybrownhats.com/view?item=103",
+                                    "webview_height_ratio": "tall",
+                                },
+                                "buttons":[
+                                    {
+                                        "type":"web_url",
+                                        "url":"https://petersfancybrownhats.com",
+                                        "title":"View Website"
+                                    },{
+                                        "type":"postback",
+                                        "title":"Start Chatting",
+                                        "payload":"DEVELOPER_DEFINED_PAYLOAD"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }
+            };
+
+            await sendMessage(sender_psid, response);
+            resolve("DONE!");
+
+        } catch (e){
+            reject(e);
+        }
+    });
+};
+
+let sendLookupOrder = (sender_psid) => {
+    return new Promise((resolve, reject) => {
+        try {
+            resolve("DONE!")
+        } catch (e){
+            reject(e);
+        }
+    });
+};
+
+let requestTalkToAgent = (sender_psid) => {
+    return new Promise((resolve, reject) => {
+        try {
+            resolve("DONE!")
+        } catch (e){
+            reject(e);
+        }
+    });
+};
+
 module.exports = {
     sendMessage: sendMessage,
-    sendMessageWelcomeNewUser: sendMessageWelcomeNewUser
+    sendMessageWelcomeNewUser: sendMessageWelcomeNewUser,
+    sendCategories: sendCategories,
+    sendLookupOrder: sendLookupOrder,
+    requestTalkToAgent: requestTalkToAgent
 }

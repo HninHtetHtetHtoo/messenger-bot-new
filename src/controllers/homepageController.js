@@ -72,6 +72,25 @@ let getWebhook = (req, res) => {
 
 // Handles messages events
 let handleMessage = async (sender_psid, received_message) => {
+
+    //check the incoming message is a quick reply or not.
+    if (received_message && received_message.quick_reply && received_message.quick_reply.payload){
+        let payload = received_message.quick_reply.payload
+
+        if (payload === "CATEGORIES") {
+            await chatbotService.sendCategories(sender_psid);
+
+        } else if (payload === "LOOKUP_ORDER") {
+            await chatbotService.sendLookupOrder(sender_psid);
+
+        } else if (payload === "TALK_AGENT") {
+            await chatbotService.requestTalkToAgent(sender_psid);
+
+        }
+
+        return;
+    }
+
     let response;
 
     // Check if the message contains text
@@ -117,6 +136,7 @@ let handleMessage = async (sender_psid, received_message) => {
 
 // Handles messaging_postbacks events
 let handlePostback = async (sender_psid, received_postback) => {
+
     let response;
 
     // Get the payload for the postback

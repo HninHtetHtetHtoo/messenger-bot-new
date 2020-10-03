@@ -32,10 +32,22 @@ let handleSetupProfileAPI = () => {
                                 "payload": "CURATION"
                             },
                             {
-                                "type": "web_url",
-                                "title": "View facebook fan page",
-                                "url": "https://www.facebook.com/techShopHaryphamdev",
-                                "webview_height_ratio": "full"
+                                "type": "nested",
+                                "title": "More_Info",
+                                "call_to_actions":[
+                                    {
+                                        "type": "web_url",
+                                        "title": "View facebook fan page",
+                                        "url": "https://www.facebook.com/techShopHaryphamdev",
+                                        "webview_height_ratio": "full"
+                                    },
+                                    {
+                                        "type": "web_url",
+                                        "title": "View youtube channel",
+                                        "url": "https://bit.ly/subscribe-haryphamdev",
+                                        "webview_height_ratio": "full"
+                                    }
+                                ]
                             }
                         ]
                     }

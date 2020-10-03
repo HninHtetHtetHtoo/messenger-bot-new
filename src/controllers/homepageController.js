@@ -1,9 +1,9 @@
 require("dotenv").config();
-import request from 'request';
+
 import homepageService from '../services/homepageService';
+import chatbotService from '../services/chatbotService';
 
 const MY_VERIFY_FB_TOKEN = process.env.MY_VERIFY_FB_TOKEN;
-const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 
 let getHomepage = (req, res) => {
     return res.render("homepage.ejs");
@@ -71,7 +71,7 @@ let getWebhook = (req, res) => {
 };
 
 // Handles messages events
-let handleMessage = (sender_psid, received_message) => {
+let handleMessage = async (sender_psid, received_message) => {
     let response;
 
     // Check if the message contains text
@@ -112,7 +112,7 @@ let handleMessage = (sender_psid, received_message) => {
     }
 
     // Sends the response message
-    callSendAPI(sender_psid, response);
+    await chatbotService.sendMessage(sender_psid, response);
 };
 
 // Handles messaging_postbacks events
@@ -132,8 +132,9 @@ let handlePostback = async (sender_psid, received_postback) => {
             break;
 
         case "GET_STARTED":
-            let userName = await homepageService.getFacebookUserName(sender_psid);
-            response = { "text" : `Hi ${userName}! Welcome to MyBuy store. I'm a MyBuy bot. How can I help you?`}
+            await chatbotService.sendMessageWelcomeNewUser(sender_psid)
+            /*let userName = await homepageService.getFacebookUserName(sender_psid);
+            response = { "text" : `Hi ${userName}! Welcome to MyBuy store. I'm a MyBuy bot. How can I help you?`}*/
             break;
 
         default:
@@ -141,13 +142,14 @@ let handlePostback = async (sender_psid, received_postback) => {
     }
 
     // Send the message to acknowledge the postback
-    callSendAPI(sender_psid, response);
+    await chatbotService.sendMessage(sender_psid, response);
 };
 
+/*
 // Sends response messages via the Send API
 let callSendAPI = async (sender_psid, response) => {
 
-    await homepageService.markMessageRead(sender_psid);
+    /!*await homepageService.markMessageRead(sender_psid);
     await homepageService.sendTypingOn(sender_psid);
 
     // Construct the message body
@@ -170,8 +172,9 @@ let callSendAPI = async (sender_psid, response) => {
         } else {
             console.error("Unable to send message:" + err);
         }
-    });
+    });*!/
 };
+*/
 
 let handleSetupProfile = async (req, res) => {
     try {

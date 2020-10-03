@@ -145,8 +145,8 @@ let handlePostback = async (sender_psid, received_postback) => {
     switch (payload){
 
         case "GET_STARTED":
-        case "RESTART_CONSERVATION":
-            await chatbotService.sendMessageWelcomeNewUser(sender_psid)
+        case "RESTART_CONVERSATION":
+            await chatbotService.sendMessageWelcomeNewUser(sender_psid);
             /*let userName = await homepageService.getFacebookUserName(sender_psid);
             response = { "text" : `Hi ${userName}! Welcome to MyBuy store. I'm a MyBuy bot. How can I help you?`}*/
             break;

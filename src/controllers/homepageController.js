@@ -143,18 +143,28 @@ let handlePostback = async (sender_psid, received_postback) => {
     let payload = received_postback.payload;
 
     switch (payload){
-        case "yes":
-            response = { "text": "Thanks!" }
-            break;
-
-        case "no":
-            response = { "text": "Oops, try sending another image." }
-            break;
 
         case "GET_STARTED":
+        case "RESTART_CONSERVATION":
             await chatbotService.sendMessageWelcomeNewUser(sender_psid)
             /*let userName = await homepageService.getFacebookUserName(sender_psid);
             response = { "text" : `Hi ${userName}! Welcome to MyBuy store. I'm a MyBuy bot. How can I help you?`}*/
+            break;
+
+        case "TALK_AGENT":
+            await chatbotService.requestTalkToAgent(sender_psid);
+            break;
+
+        case "SHOW_HEADPHONES":
+            await chatbotService.showHeadphones(sender_psid);
+            break;
+
+        case "SHOW_TV":
+            await chatbotService.showTVs(sender_psid);
+            break;
+
+        case "SHOW_PLAYSTATION":
+            await chatbotService.showPlaystation(sender_psid);
             break;
 
         default:

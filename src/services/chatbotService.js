@@ -203,10 +203,43 @@ let requestTalkToAgent = (sender_psid) => {
     });
 };
 
+let showHeadphones = (sender_psid) => {
+    return new Promise((resolve, reject) => {
+        try {
+            resolve("DONE!")
+        } catch (e){
+            reject(e);
+        }
+    });
+};
+
+let showTVs = (sender_psid) => {
+    return new Promise((resolve, reject) => {
+        try {
+            resolve("DONE!")
+        } catch (e){
+            reject(e);
+        }
+    });
+};
+
+let showPlaystation = (sender_psid) => {
+    return new Promise((resolve, reject) => {
+        try {
+            resolve("DONE!")
+        } catch (e){
+            reject(e);
+        }
+    });
+};
+
 module.exports = {
     sendMessage: sendMessage,
     sendMessageWelcomeNewUser: sendMessageWelcomeNewUser,
     sendCategories: sendCategories,
     sendLookupOrder: sendLookupOrder,
-    requestTalkToAgent: requestTalkToAgent
+    requestTalkToAgent: requestTalkToAgent,
+    showHeadphones: showHeadphones,
+    showTVs: showTVs,
+    showPlaystation: showPlaystation
 }

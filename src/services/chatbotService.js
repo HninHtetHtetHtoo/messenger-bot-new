@@ -107,65 +107,65 @@ let sendCategories = (sender_psid) => {
                         "template_type":"generic",
                         "elements":[
                             {
-                                "title":"Welcome!",
+                                "title":"HeadPhones",
                                 "image_url":"https://petersfancybrownhats.com/company_image.png",
-                                "subtitle":"We have the right hat for everyone.",
+                                "subtitle":"Boss Noise Cancelling Wireless Bluetooth HeadPhones",
                                 "default_action": {
                                     "type": "web_url",
-                                    "url": "https://petersfancybrownhats.com/view?item=103",
+                                    "url": "https://bit.ly/webHeadphones",
                                     "webview_height_ratio": "tall",
                                 },
                                 "buttons":[
                                     {
                                         "type":"web_url",
-                                        "url":"https://petersfancybrownhats.com",
-                                        "title":"View Website"
+                                        "url":"https://bit.ly/webHeadphones",
+                                        "title":"View On Website"
                                     },{
                                         "type":"postback",
-                                        "title":"Start Chatting",
-                                        "payload":"DEVELOPER_DEFINED_PAYLOAD"
+                                        "title":"Show HeadPhones",
+                                        "payload":"SHOW_HEADPHONES"
                                     }
                                 ]
                             },
                             {
-                                "title":"Welcome 1!",
-                                "image_url":"https://petersfancybrownhats.com/company_image.png",
+                                "title":"TV",
+                                "image_url":"https://bit.ly/imageTV",
                                 "subtitle":"We have the right hat for everyone.",
                                 "default_action": {
                                     "type": "web_url",
-                                    "url": "https://petersfancybrownhats.com/view?item=103",
+                                    "url": "https://bit.ly/webTelevision",
                                     "webview_height_ratio": "tall",
                                 },
                                 "buttons":[
                                     {
                                         "type":"web_url",
-                                        "url":"https://petersfancybrownhats.com",
-                                        "title":"View Website"
+                                        "url":"https://bit.ly/webTelevision",
+                                        "title":"View On Website"
                                     },{
                                         "type":"postback",
-                                        "title":"Start Chatting",
-                                        "payload":"DEVELOPER_DEFINED_PAYLOAD"
+                                        "title":"Show TVs",
+                                        "payload":"SHOW_TV"
                                     }
                                 ]
                             },
                             {
-                                "title":"Welcome 2!",
-                                "image_url":"https://petersfancybrownhats.com/company_image.png",
+                                "title":"Playstation",
+                                "image_url":"https://bit.ly/imagePlaystation",
                                 "subtitle":"We have the right hat for everyone.",
                                 "default_action": {
                                     "type": "web_url",
-                                    "url": "https://petersfancybrownhats.com/view?item=103",
+                                    "url": "https://bit.ly/webPlaystation",
                                     "webview_height_ratio": "tall",
                                 },
                                 "buttons":[
                                     {
                                         "type":"web_url",
-                                        "url":"https://petersfancybrownhats.com",
-                                        "title":"View Website"
+                                        "url":"https://bit.ly/webPlaystation",
+                                        "title":"View On Website"
                                     },{
                                         "type":"postback",
-                                        "title":"Start Chatting",
-                                        "payload":"DEVELOPER_DEFINED_PAYLOAD"
+                                        "title":"Show Playstation",
+                                        "payload":"SHOW_PLAYSTATION"
                                     }
                                 ]
                             }

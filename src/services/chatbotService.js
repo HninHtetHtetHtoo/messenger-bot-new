@@ -41,7 +41,7 @@ let sendMessage = (sender_psid, response) => {
 let sendMessageWelcomeNewUser = (sender_psid) => {
   return new Promise(async (resolve, reject) => {
      try {
-         let userName = homepageService.getFacebookUserName(sender_psid);
+         let userName = await homepageService.getFacebookUserName(sender_psid);
 
          //send text msg
          let responseText = {

@@ -9,7 +9,6 @@ const SECONDARY_RECEIVER_ID = process.env.SECONDARY_RECEIVER_ID;
 let sendMessage = (sender_psid, response) => {
     return new Promise(async (resolve, reject) => {
        try {
-           console.log("HHI")
            await homepageService.markMessageRead(sender_psid);
            await homepageService.sendTypingOn(sender_psid);
 
@@ -21,7 +20,6 @@ let sendMessage = (sender_psid, response) => {
                "message": response
            };
 
-           console.log("req : ", request_body)
 
            // Send the HTTP request to the Messenger Platform
            request({
@@ -87,7 +85,7 @@ let sendMessageWelcomeNewUser = (sender_psid) => {
                  }
              ]
          }
-         console.log("Hi")
+
          await sendMessage(sender_psid, responseText);
          await sendMessage(sender_psid, responseImage);
          await sendMessage(sender_psid, responseText2);
@@ -200,7 +198,7 @@ let sendLookupOrder = (sender_psid) => {
 let requestTalkToAgent = (sender_psid) => {
     return new Promise(async (resolve, reject) => {
         try {
-            //send a text message
+            /*//send a text message
             let response = {
                 "text" : "Ok. Someone will be with you in a few minutes ^^"
             }
@@ -208,7 +206,7 @@ let requestTalkToAgent = (sender_psid) => {
             await sendMessage(sender_psid, response)
 
             //change this conversation to page inbox
-            await passThreadControl(sender_psid)
+            await passThreadControl(sender_psid)*/
 
             resolve("DONE!")
         } catch (e){
@@ -247,7 +245,7 @@ let showPlaystation = (sender_psid) => {
     });
 };
 
-let passThreadControl = (sender_psid) => {
+/*let passThreadControl = (sender_psid) => {
     return new Promise((resolve, reject) => {
         try {
 
@@ -278,7 +276,7 @@ let passThreadControl = (sender_psid) => {
             reject(e);
         }
     });
-};
+};*/
 
 module.exports = {
     sendMessage: sendMessage,

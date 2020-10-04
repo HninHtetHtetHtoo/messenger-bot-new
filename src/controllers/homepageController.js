@@ -82,7 +82,6 @@ let handleMessage = async (sender_psid, received_message) => {
     if (received_message && received_message.quick_reply && received_message.quick_reply.payload){
         let payload = received_message.quick_reply.payload
 
-        console.log("paylog : ", payload)
         if (payload === "CATEGORIES") {
             await chatbotService.sendCategories(sender_psid);
 
@@ -148,15 +147,11 @@ let handlePostback = async (sender_psid, received_postback) => {
     // Get the payload for the postback
     let payload = received_postback.payload;
 
-    console.log("pay load : ", payload)
-
     switch (payload){
 
         case "GET_STARTED":
         case "RESTART_CONVERSATION":
             await chatbotService.sendMessageWelcomeNewUser(sender_psid);
-            /*let userName = await homepageService.getFacebookUserName(sender_psid);
-            response = { "text" : `Hi ${userName}! Welcome to MyBuy store. I'm a MyBuy bot. How can I help you?`}*/
             break;
 
         case "TALK_AGENT":

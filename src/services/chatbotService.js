@@ -9,6 +9,7 @@ const SECONDARY_RECEIVER_ID = process.env.SECONDARY_RECEIVER_ID;
 let sendMessage = (sender_psid, response) => {
     return new Promise(async (resolve, reject) => {
        try {
+           console.log("HHI")
            await homepageService.markMessageRead(sender_psid);
            await homepageService.sendTypingOn(sender_psid);
 
@@ -86,7 +87,7 @@ let sendMessageWelcomeNewUser = (sender_psid) => {
                  }
              ]
          }
-
+         console.log("Hi")
          await sendMessage(sender_psid, responseText);
          await sendMessage(sender_psid, responseImage);
          await sendMessage(sender_psid, responseText2);

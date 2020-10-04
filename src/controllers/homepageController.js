@@ -18,6 +18,9 @@ let postWebhook = (req, res) =>{
         // Iterates over each entry - there may be multiple if batched
         body.entry.forEach(function(entry) {
 
+            //check the incoming message from primary app or not; if secondary app, exit
+            if (entry.standby) return ;
+
             // Gets the body of the webhook event
             let webhook_event = entry.messaging[0];
             console.log(webhook_event);

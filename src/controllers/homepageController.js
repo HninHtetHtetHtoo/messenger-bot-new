@@ -24,7 +24,12 @@ let postWebhook = (req, res) =>{
             console.log("For Each!!")
 
             //check the incoming message from primary app or not; if secondary app, exit
-            if (entry.standby) return ;
+            if (entry.standby) {
+                console.log("----------------");
+                console.log(entry.standby);
+                console.log("----------------");
+                return
+            } ;
 
             // Gets the body of the webhook event
             let webhook_event = entry.messaging[0];

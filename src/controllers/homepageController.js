@@ -29,7 +29,7 @@ let postWebhook = (req, res) =>{
                 if (webhook_standby && webhook_standby.message){
                     if (webhook_standby.message.text === "back" || webhook_standby.message.text === "exit"){
                         console.log("----------------");
-                        console.log(webhook_standby.sender.id);
+                        console.log("sender_id ::::: ",webhook_standby.sender.id);
                         console.log("----------------");
                         //call function to the conversation to the primary app
                         //chatbotService.passThreadControl(sender_psid, "primary");

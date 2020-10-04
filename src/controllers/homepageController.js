@@ -26,6 +26,11 @@ let postWebhook = (req, res) =>{
             //check the incoming message from primary app or not; if secondary app, exit
             if (entry.standby) {
                 console.log("----------------");
+                let webhook_standby = entry.standby[0];
+                if (webhook_standby.text === "back" || webhook_standby.text === "exit"){
+                    //call function to the conversation to the primary app
+                    console.log("return here!")
+                }
                 console.log(entry.standby);
                 console.log("----------------");
                 return

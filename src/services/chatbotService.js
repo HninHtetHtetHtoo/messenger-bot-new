@@ -194,8 +194,18 @@ let sendLookupOrder = (sender_psid) => {
 };
 
 let requestTalkToAgent = (sender_psid) => {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
         try {
+            //send a text message
+            let response = {
+                "text" : "Ok. Someone will be with you in a few minutes ^^"
+            }
+
+            await sendMessage(sender_psid, response)
+
+            //change this conversation to page inbox
+            await passThreadControl(sender_psid)
+
             resolve("DONE!")
         } catch (e){
             reject(e);
@@ -228,6 +238,39 @@ let showPlaystation = (sender_psid) => {
         try {
             resolve("DONE!")
         } catch (e){
+            reject(e);
+        }
+    });
+};
+
+let passThreadControl = (sender_psid) => {
+    return new Promise((resolve, reject) => {
+        try {
+
+            // Construct the message body
+            let request_body = {
+                "recipient": {
+                    "id": sender_psid
+                },
+                "target_app_id": process.env.SECONDARY_RECEIVER_ID,
+                "metadata": "Pass thread control to inbox chat."
+            };
+
+            // Send the HTTP request to the Messenger Platform
+            request({
+                "uri": `https://graph.facebook.com/v6.0/me/pass_thread_control?access_token=${PAGE_ACCESS_TOKEN}`,
+                "qs": { "access_token": PAGE_ACCESS_TOKEN },
+                "method": "POST",
+                "json": request_body
+            }, (err, res, body) => {
+                if (!err) {
+                    resolve('message sent!')
+                } else {
+                    reject("Unable to send message:" + err);
+                }
+            });
+
+        }catch (e){
             reject(e);
         }
     });

@@ -20,6 +20,8 @@ let sendMessage = (sender_psid, response) => {
                "message": response
            };
 
+           console.log("req : ", request_body)
+
            // Send the HTTP request to the Messenger Platform
            request({
                "uri": "https://graph.facebook.com/v6.0/me/messages",

@@ -2,6 +2,7 @@ require("dotenv").config();
 
 import request from 'request';
 import homepageService from "./homepageService";
+import templateMessage from "./templateMessage";
 
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const SECONDARY_RECEIVER_ID = process.env.SECONDARY_RECEIVER_ID;
@@ -274,7 +275,7 @@ let passThreadControl = (sender_psid, app) => {
 
             // Send the HTTP request to the Messenger Platform
             request({
-                "uri": `https://graph.facebook.com/v6.0/me/pass_thread_control?access_token=${PAGE_ACCESS_TOKEN}`,
+                "uri": `https://graph.facebook.com/v6.0/me/pass_thread_control`,
                 "qs": { "access_token": PAGE_ACCESS_TOKEN },
                 "method": "POST",
                 "json": request_body
@@ -292,6 +293,54 @@ let passThreadControl = (sender_psid, app) => {
     });
 };
 
+let takeControlConversation = (sender_psid) => {
+    return new Promise((resolve, reject) => {
+        try {
+
+            // Construct the message body
+            let request_body = {
+                "recipient": {
+                    "id": sender_psid
+                },
+                "metadata": "Pass this conversation from page inbox to the bot - primary app"
+            };
+
+            // Send the HTTP request to the Messenger Platform
+            request({
+                "uri": `https://graph.facebook.com/v6.0/me/take_thread_control`,
+                "qs": { "access_token": PAGE_ACCESS_TOKEN },
+                "method": "POST",
+                "json": request_body
+            }, async (err, res, body) => {
+                if (!err) {
+                    //send message
+                    await sendMessage(sender_psid, {"text" : "The chat bot come back! ^^"});
+                    await backToMainMenu(sender_psid);
+
+                    resolve('message sent!')
+                } else {
+                    reject("Unable to send message:" + err);
+                }
+            });
+
+        }catch (e){
+            reject(e);
+        }
+    });
+};
+
+let backToMainMenu = (sender_psid) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let response = templateMessage.backToMainMenuTemplate();
+            await sendMessage(sender_psid, response);
+            resolve("done");
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
+
 module.exports = {
     sendMessage: sendMessage,
     sendMessageWelcomeNewUser: sendMessageWelcomeNewUser,
@@ -301,5 +350,7 @@ module.exports = {
     showHeadphones: showHeadphones,
     showTVs: showTVs,
     showPlaystation: showPlaystation,
-    passThreadControl: passThreadControl
+    passThreadControl: passThreadControl,
+    backToMainMenu: backToMainMenu,
+    takeControlConversation: takeControlConversation
 }

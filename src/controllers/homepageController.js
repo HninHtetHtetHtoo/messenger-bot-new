@@ -33,8 +33,10 @@ let postWebhook = (req, res) =>{
             // Check if the event is a message or postback and
             // pass the event to the appropriate handler function
             if (webhook_event.message) {
+                console.log("handle message")
                 handleMessage(sender_psid, webhook_event.message);
             } else if (webhook_event.postback) {
+                console.log("handle post back")
                 handlePostback(sender_psid, webhook_event.postback);
             }
         });
@@ -80,6 +82,7 @@ let handleMessage = async (sender_psid, received_message) => {
     if (received_message && received_message.quick_reply && received_message.quick_reply.payload){
         let payload = received_message.quick_reply.payload
 
+        console.log("paylog : ", payload)
         if (payload === "CATEGORIES") {
             await chatbotService.sendCategories(sender_psid);
 
@@ -145,6 +148,8 @@ let handlePostback = async (sender_psid, received_postback) => {
     // Get the payload for the postback
     let payload = received_postback.payload;
 
+    console.log("pay load : ", payload)
+
     switch (payload){
 
         case "GET_STARTED":
@@ -168,6 +173,10 @@ let handlePostback = async (sender_psid, received_postback) => {
 
         case "SHOW_PLAYSTATION":
             await chatbotService.showPlaystation(sender_psid);
+            break;
+
+        case "CATEGORIES":
+            await chatbotService.sendCategories(sender_psid);
             break;
 
         default:

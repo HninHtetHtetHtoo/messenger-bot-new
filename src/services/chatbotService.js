@@ -5,6 +5,7 @@ import homepageService from "./homepageService";
 
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const SECONDARY_RECEIVER_ID = process.env.SECONDARY_RECEIVER_ID;
+const PRIMARY_RECEIVER_ID = process.env.FACEBOOK_APP_ID;
 
 let sendMessage = (sender_psid, response) => {
     return new Promise(async (resolve, reject) => {
@@ -206,7 +207,8 @@ let requestTalkToAgent = (sender_psid) => {
             await sendMessage(sender_psid, response)
 
             //change this conversation to page inbox
-            await passThreadControl(sender_psid)
+            let app = "page_inbox";
+            await passThreadControl(sender_psid, app)
 
             resolve("DONE!")
         } catch (e){
@@ -245,17 +247,29 @@ let showPlaystation = (sender_psid) => {
     });
 };
 
-let passThreadControl = (sender_psid) => {
+let passThreadControl = (sender_psid, app) => {
     return new Promise((resolve, reject) => {
         try {
+            let target_app_id = "";
+            let metadata = "";
+
+            if (app === "page_inbox"){
+                target_app_id = SECONDARY_RECEIVER_ID;
+                metadata = "Pass thread control to inbox chat.";
+            }
+
+            if (app === "primary"){
+                target_app_id = PRIMARY_RECEIVER_ID;
+                metadata = "Pass thread control to the bot, primary app";
+            }
 
             // Construct the message body
             let request_body = {
                 "recipient": {
                     "id": sender_psid
                 },
-                "target_app_id": SECONDARY_RECEIVER_ID,
-                "metadata": "Pass thread control to inbox chat."
+                "target_app_id": target_app_id,
+                "metadata": metadata
             };
 
             // Send the HTTP request to the Messenger Platform
@@ -286,5 +300,6 @@ module.exports = {
     requestTalkToAgent: requestTalkToAgent,
     showHeadphones: showHeadphones,
     showTVs: showTVs,
-    showPlaystation: showPlaystation
+    showPlaystation: showPlaystation,
+    passThreadControl: passThreadControl
 }

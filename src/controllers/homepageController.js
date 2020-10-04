@@ -25,16 +25,17 @@ let postWebhook = (req, res) =>{
 
             //check the incoming message from primary app or not; if secondary app, exit
             if (entry.standby) {
-                console.log("----------------");
                 let webhook_standby = entry.standby[0];
                 if (webhook_standby && webhook_standby.message){
                     if (webhook_standby.message.text === "back" || webhook_standby.message.text === "exit"){
+                        console.log("----------------");
+                        console.log(webhook_standby.sender.id);
+                        console.log("----------------");
                         //call function to the conversation to the primary app
-                        console.log("return here!")
+                        //chatbotService.passThreadControl(sender_psid, "primary");
                     }
                 }
-                console.log("----------------");
-                return
+                return;
             } ;
 
             // Gets the body of the webhook event

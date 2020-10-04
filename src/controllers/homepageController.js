@@ -27,11 +27,12 @@ let postWebhook = (req, res) =>{
             if (entry.standby) {
                 console.log("----------------");
                 let webhook_standby = entry.standby[0];
-                if (webhook_standby.message.text === "back" || webhook_standby.message.text === "exit"){
-                    //call function to the conversation to the primary app
-                    console.log("return here!")
+                if (webhook_standby && webhook_standby.message){
+                    if (webhook_standby.message.text === "back" || webhook_standby.message.text === "exit"){
+                        //call function to the conversation to the primary app
+                        console.log("return here!")
+                    }
                 }
-                console.log(entry.standby);
                 console.log("----------------");
                 return
             } ;

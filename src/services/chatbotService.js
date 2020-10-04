@@ -198,7 +198,7 @@ let sendLookupOrder = (sender_psid) => {
 let requestTalkToAgent = (sender_psid) => {
     return new Promise(async (resolve, reject) => {
         try {
-            /*//send a text message
+            //send a text message
             let response = {
                 "text" : "Ok. Someone will be with you in a few minutes ^^"
             }
@@ -206,7 +206,7 @@ let requestTalkToAgent = (sender_psid) => {
             await sendMessage(sender_psid, response)
 
             //change this conversation to page inbox
-            await passThreadControl(sender_psid)*/
+            await passThreadControl(sender_psid)
 
             resolve("DONE!")
         } catch (e){
@@ -245,7 +245,7 @@ let showPlaystation = (sender_psid) => {
     });
 };
 
-/*let passThreadControl = (sender_psid) => {
+let passThreadControl = (sender_psid) => {
     return new Promise((resolve, reject) => {
         try {
 
@@ -276,7 +276,7 @@ let showPlaystation = (sender_psid) => {
             reject(e);
         }
     });
-};*/
+};
 
 module.exports = {
     sendMessage: sendMessage,

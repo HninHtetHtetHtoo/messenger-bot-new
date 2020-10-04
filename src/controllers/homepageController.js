@@ -18,8 +18,10 @@ let postWebhook = (req, res) =>{
     // Checks this is an event from a page subscription
     if (body.object === 'page') {
 
+        console.log("Hi")
         // Iterates over each entry - there may be multiple if batched
         body.entry.forEach(function(entry) {
+            console.log("For Each!!")
 
             //check the incoming message from primary app or not; if secondary app, exit
             if (entry.standby) return ;
